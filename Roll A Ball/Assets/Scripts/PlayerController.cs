@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+	// The game controller keeping score
+	public GameController GameManager;
+
 	// The Rigidbody component attached to the player
 	Rigidbody rb;
 
@@ -11,7 +14,7 @@ public class PlayerController : MonoBehaviour
 	float inputY;
 
 	// The speed at which the player will move
-	float speed = 10;
+	public float speed = 10f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,5 +41,21 @@ public class PlayerController : MonoBehaviour
 		// Store the X and Y input values for the movement
 		inputX = moveVector.x;
 		inputY = moveVector.y;
+	}
+
+	void OnTriggerEnter ( Collider other )
+	{
+		// Check if the game object the Collider is attached to has a Collectible tag
+		if ( other.tag == "Collectible" )
+		{
+			// Get a reference to the Score Value component
+			ScoreValue scoreValue = other.gameObject.GetComponent<ScoreValue> ( );
+
+			// Update the game score with the score from the collectible
+			GameManager.AddScore ( scoreValue.Value );
+
+			// Disable the game object collided into
+			other.gameObject.SetActive ( false );
+		}
 	}
 }
