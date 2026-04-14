@@ -1,2 +1,2 @@
 # Roll-A-Ball
-My first Unity project
+This is a completed sample Roll A Ball project for Outcome School students to reference
