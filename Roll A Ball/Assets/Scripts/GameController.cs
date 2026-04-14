@@ -17,7 +17,10 @@ public class GameController : MonoBehaviour
 	// The timer text UI element
 	public TMP_Text TimerText;
 
-	// The button element for returning to the main menu
+	// The button element for loading the next level scene
+	public GameObject NextLevelButton;
+
+	// The button element for returning to the main menu scene
 	public GameObject MainMenuButton;
 
 	// The amount of score needed to win
@@ -41,6 +44,9 @@ public class GameController : MonoBehaviour
 
 		// Hide the win lose text at the start of the level
 		WinLoseContainer.SetActive ( false );
+
+		// Hide the next level button at the start of the level
+		NextLevelButton.SetActive ( false );
 
 		// Hide the main menu button at the start of the level
 		MainMenuButton.SetActive ( false );
@@ -112,10 +118,28 @@ public class GameController : MonoBehaviour
 				// Set the color of the win lose text to green
 				WinLoseText.color = Color.green;
 
+				// Get the current scene data
+				Scene scene = SceneManager.GetActiveScene ( );
+
+				// Display the next level button only if it is not the last level
+				NextLevelButton.SetActive ( scene.name != "Level 3" );
+
 				// Display the main menu button
 				MainMenuButton.SetActive ( true );
 			}
 		}
+	}
+
+	public void NextLevel ( )
+	{
+		// Get the current scene data
+		Scene scene = SceneManager.GetActiveScene ( );
+
+		// Get the index of the current scene
+		int index = scene.buildIndex;
+
+		// Load the next scene
+		SceneManager.LoadScene ( index + 1 );
 	}
 
 	public void MainMenu ( )
