@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameController : MonoBehaviour
 
 	// The timer text UI element
 	public TMP_Text TimerText;
+
+	// The button element for returning to the main menu
+	public GameObject MainMenuButton;
 
 	// The amount of score needed to win
 	public int Goal;
@@ -37,7 +41,10 @@ public class GameController : MonoBehaviour
 
 		// Hide the win lose text at the start of the level
 		WinLoseContainer.SetActive ( false );
-    }
+
+		// Hide the main menu button at the start of the level
+		MainMenuButton.SetActive ( false );
+	}
 
     // Update is called once per frame
     void Update()
@@ -64,6 +71,9 @@ public class GameController : MonoBehaviour
 
 				// Set the color the win lose text to red
 				WinLoseText.color = Color.red;
+
+				// Display the main menu button
+				MainMenuButton.SetActive ( true );
 			}
 
 			// Convert the timer in seconds to a TimeSpan value
@@ -101,8 +111,17 @@ public class GameController : MonoBehaviour
 
 				// Set the color of the win lose text to green
 				WinLoseText.color = Color.green;
+
+				// Display the main menu button
+				MainMenuButton.SetActive ( true );
 			}
 		}
+	}
+
+	public void MainMenu ( )
+	{
+		// Load the main menu scene
+		SceneManager.LoadScene ( "Main Menu" );
 	}
 
 	// SetScoreText updates the ScoreText UI element to display the current score
